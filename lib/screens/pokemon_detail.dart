@@ -21,16 +21,12 @@ class PokemonDetailScreen extends StatelessWidget {
             pokemon.imageUrl,
             height: 200,
             width: 200,
+            fit: BoxFit.cover,
           ),
           SizedBox(height: 16),
           Text(
             'Name: ${pokemon.name}',
             style: TextStyle(fontSize: 24),
-          ),
-          SizedBox(height: 8),
-          Text(
-            'ID: ${pokemon.id}',
-            style: TextStyle(fontSize: 16),
           ),
           SizedBox(height: 8),
           Text(
@@ -53,6 +49,20 @@ class PokemonDetailScreen extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) {
               return Text(
                 '- ${pokemon.types[index]}',
+                style: TextStyle(fontSize: 16),
+              );
+            },
+          ),
+          Text(
+            'Stats: ',
+            style: TextStyle(fontSize: 20),
+          ),
+          ListView.builder(
+            shrinkWrap: true,
+            itemCount: pokemon.stats.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Text(
+                '- ${pokemon.stats[index]}',
                 style: TextStyle(fontSize: 16),
               );
             },
