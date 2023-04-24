@@ -4,7 +4,7 @@ import 'package:pokemon_flutter/models/pokemon.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseHelper {
-  static const _databaseName = 'pokemon_database.db';
+  static const _databaseName = 'pokemon_7.db';
   static const _databaseVersion = 1;
 
   static const table = 'pokemon';
@@ -14,6 +14,7 @@ class DatabaseHelper {
   static const columnWeight = 'weight';
   static const columnHeight = 'height';
   static const columnTypes = 'types';
+  static const columnStats = 'stats';
 
   static Database? _database;
 
@@ -42,7 +43,8 @@ class DatabaseHelper {
         $columnImageUrl TEXT NOT NULL,
         $columnWeight INTEGER,
         $columnHeight INTEGER, 
-        $columnTypes TEXT
+        $columnTypes TEXT,
+        $columnStats TEXT
       )
     ''');
   }
@@ -65,6 +67,7 @@ class DatabaseHelper {
       // Вставляем нового покемона в базу данных
 
       final typesJson = jsonEncode(pokemon.types);
+      final statsJson = jsonEncode(pokemon.stats);
 
       return db.insert(
         table,
@@ -75,6 +78,7 @@ class DatabaseHelper {
           columnWeight: pokemon.weight,
           columnHeight: pokemon.height,
           columnTypes: typesJson,
+          columnStats: statsJson,
         },
       );
     }
@@ -85,13 +89,13 @@ class DatabaseHelper {
     final results = await db.query(table) as List<Map<String, dynamic>>;
     return results
         .map((result) => Pokemon(
-              id: result[columnId],
-              name: result[columnName],
-              imageUrl: result[columnImageUrl],
-              weight: result[columnWeight],
-              height: result[columnHeight],
-              types: jsonDecode(result[columnTypes]),
-            ))
+            id: result[columnId],
+            name: result[columnName],
+            imageUrl: result[columnImageUrl],
+            weight: result[columnWeight],
+            height: result[columnHeight],
+            types: jsonDecode(result[columnTypes]),
+            stats: jsonDecode(result[columnStats])))
         .toList();
   }
 }

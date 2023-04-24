@@ -24,6 +24,7 @@ void main() async {
     }
   }
   // Запускаем приложение
+
   runApp(PokemonApp());
 }
 

@@ -5,6 +5,7 @@ class Pokemon {
   final int weight;
   final int height;
   final List<dynamic> types;
+  final List<dynamic> stats;
 
   Pokemon(
       {required this.name,
@@ -12,12 +13,17 @@ class Pokemon {
       required this.imageUrl,
       required this.weight,
       required this.height,
-      required this.types});
+      required this.types,
+      required this.stats});
 
   factory Pokemon.fromJson(Map<String, dynamic> json) {
     final types = json['types']
         .map<String>((type) => type['type']['name'].toString())
         .toList();
+    final stats = json['stats']
+        .map<String>((type) => type['base_stat'].toString())
+        .toList();
+
     return Pokemon(
       name: json['name'],
       id: json['id'],
@@ -25,6 +31,7 @@ class Pokemon {
       weight: json['weight'],
       height: json['height'],
       types: types,
+      stats: stats,
     );
   }
 }
