@@ -15,11 +15,12 @@
  - Data should be cached in the database to support offline mode.
  
 ### Requirements
-Clean Architecture / VIPER
-Use your own design for the application
-Code should support Unit-testing
+ - Clean Architecture / VIPER
+ - Use your own design for the application
+ - Code should support Unit-testing
+
 ### Result
-Code should be pushed to a public repository on GitHub
-Repository should contain commit history instead of a single one
-Select icons by yourself. The app should contain non-default launch icon.
-Link to the app should be provided to the interviewer.
+ - Code should be pushed to a public repository on GitHub
+ - Repository should contain commit history instead of a single one
+ - Select icons by yourself. The app should contain non-default launch icon.
+ - Link to the app should be provided to the interviewer.
