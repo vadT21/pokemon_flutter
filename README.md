@@ -24,3 +24,5 @@
  - Repository should contain commit history instead of a single one
  - Select icons by yourself. The app should contain non-default launch icon.
  - Link to the app should be provided to the interviewer.
+
+### How it's look like
