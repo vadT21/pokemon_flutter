@@ -14,7 +14,7 @@ class PokemonApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Pokémon App',
+      title: 'Pokemon App',
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
