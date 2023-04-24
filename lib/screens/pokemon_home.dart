@@ -21,7 +21,7 @@ class _PokemonHomePageState extends State<PokemonHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pokedex'),
+        title: Text('Pokemon application'),
       ),
       body: _pokemonList.isEmpty
           ? const Center(
@@ -29,6 +29,8 @@ class _PokemonHomePageState extends State<PokemonHomePage> {
             )
           : GridView.count(
               crossAxisCount: 2,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
               children: _pokemonList.map((pokemon) {
                 return GestureDetector(
                   onTap: () {
@@ -42,13 +44,81 @@ class _PokemonHomePageState extends State<PokemonHomePage> {
                     );
                   },
                   child: Card(
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: Image.network(pokemon.imageUrl),
+                    child: Container(
+                      padding: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/images/background.jpg'),
+                          fit: BoxFit.cover,
+                          colorFilter: ColorFilter.mode(
+                            Color.fromARGB(255, 255, 255, 255).withOpacity(0.8),
+                            BlendMode.srcATop,
+                          ),
                         ),
-                        Text(pokemon.name),
-                      ],
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text('#${pokemon.id}'),
+                              Container(
+                                width: 96,
+                                height: 96,
+                                decoration: BoxDecoration(
+                                  color: Colors.green,
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                child: Image.network(
+                                  pokemon.imageUrl,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 10),
+                          Text(
+                            pokemon.name.toUpperCase(),
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                              shadows: [
+                                Shadow(
+                                  blurRadius: 5,
+                                  color: Colors.grey,
+                                  offset: Offset(1, 2),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          Row(
+                            children: [
+                              Wrap(
+                                spacing:
+                                    8.0, // расстояние между элементами списка
+                                children: pokemon.types
+                                    .map(
+                                      (type) => Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 4.0, horizontal: 8.0),
+                                        decoration: BoxDecoration(
+                                          color: Colors.green,
+                                          borderRadius:
+                                              BorderRadius.circular(50),
+                                        ),
+                                        child: Text(
+                                          '$type',
+                                          style: const TextStyle(fontSize: 14),
+                                        ),
+                                      ),
+                                    )
+                                    .toList(),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 );
