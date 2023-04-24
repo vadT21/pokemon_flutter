@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:pokemon_flutter/models/pokemon.dart';
 import 'package:pokemon_flutter/screens/pokemon_detail.dart';
 import 'package:pokemon_flutter/services/pokemon_db.dart';
+import 'package:pokemon_flutter/services/pokemon_api_service.dart';
 
 class PokemonHomePage extends StatefulWidget {
   @override
@@ -95,21 +97,22 @@ class _PokemonHomePageState extends State<PokemonHomePage> {
                           Row(
                             children: [
                               Wrap(
-                                spacing:
-                                    8.0, // расстояние между элементами списка
+                                spacing: 8.0,
                                 children: pokemon.types
                                     .map(
                                       (type) => Container(
                                         padding: const EdgeInsets.symmetric(
-                                            vertical: 4.0, horizontal: 8.0),
+                                            vertical: 4.0, horizontal: 10.0),
                                         decoration: BoxDecoration(
                                           color: Colors.green,
                                           borderRadius:
-                                              BorderRadius.circular(50),
+                                              BorderRadius.circular(10),
                                         ),
                                         child: Text(
                                           '$type',
-                                          style: const TextStyle(fontSize: 14),
+                                          style: const TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.white),
                                         ),
                                       ),
                                     )
@@ -124,10 +127,29 @@ class _PokemonHomePageState extends State<PokemonHomePage> {
                 );
               }).toList(),
             ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          fetchData();
+        },
+        child: const Icon(Icons.add),
+      ),
     );
   }
 
   void fetchData() async {
+    final connectivityResult = await Connectivity().checkConnectivity();
+    final countItems = await DatabaseHelper.countItems();
+    final currentPage = (countItems / 10).toInt();
+    if (connectivityResult == ConnectivityResult.none) {
+      // нет подключения к интернету
+    } else {
+      // есть подключение к интернету
+      final apiData = await fetchPokemonList(currentPage);
+      // Сохраняем данные в базу данных
+      for (final pokemon in apiData) {
+        await DatabaseHelper.insertPokemon(pokemon);
+      }
+    }
     final pokemonList = await DatabaseHelper.getPokemonList();
     setState(() {
       _pokemonList = pokemonList;
