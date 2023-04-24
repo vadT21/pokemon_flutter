@@ -33,6 +33,16 @@ class PokemonDetailScreen extends StatelessWidget {
             style: TextStyle(fontSize: 16),
           ),
           SizedBox(height: 8),
+          Text(
+            'Weight: ${pokemon.weight}',
+            style: TextStyle(fontSize: 16),
+          ),
+          SizedBox(height: 8),
+          Text(
+            'Height: ${pokemon.height}',
+            style: TextStyle(fontSize: 16),
+          ),
+          SizedBox(height: 8),
         ],
       ),
     );

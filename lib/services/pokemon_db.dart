@@ -3,13 +3,15 @@ import 'package:pokemon_flutter/models/pokemon.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseHelper {
-  static final _databaseName = 'pokemon_database.db';
-  static final _databaseVersion = 1;
+  static const _databaseName = 'pokemon_3.db';
+  static const _databaseVersion = 3;
 
-  static final table = 'pokemon';
-  static final columnId = '_id';
-  static final columnName = 'name';
-  static final columnImageUrl = 'image_url';
+  static const table = 'pokemon';
+  static const columnId = '_id';
+  static const columnName = 'name';
+  static const columnImageUrl = 'image_url';
+  static const columnWeight = 'weight';
+  static const columnHeight = 'height';
 
   static Database? _database;
 
@@ -35,7 +37,9 @@ class DatabaseHelper {
       CREATE TABLE $table (
         $columnId INTEGER PRIMARY KEY,
         $columnName TEXT NOT NULL,
-        $columnImageUrl TEXT NOT NULL
+        $columnImageUrl TEXT NOT NULL,
+        $columnWeight INTEGER,
+        $columnHeight INTEGER 
       )
     ''');
   }
@@ -62,6 +66,8 @@ class DatabaseHelper {
           columnId: pokemon.id,
           columnName: pokemon.name,
           columnImageUrl: pokemon.imageUrl,
+          columnWeight: pokemon.weight,
+          columnHeight: pokemon.height,
         },
       );
     }
@@ -75,6 +81,8 @@ class DatabaseHelper {
               id: result[columnId],
               name: result[columnName],
               imageUrl: result[columnImageUrl],
+              weight: result[columnWeight],
+              height: result[columnHeight],
             ))
         .toList();
   }
