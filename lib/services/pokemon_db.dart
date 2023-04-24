@@ -65,7 +65,6 @@ class DatabaseHelper {
       return existingPokemon.first[columnId] as int;
     } else {
       // Вставляем нового покемона в базу данных
-
       final typesJson = jsonEncode(pokemon.types);
       final statsJson = jsonEncode(pokemon.stats);
 
@@ -84,6 +83,7 @@ class DatabaseHelper {
     }
   }
 
+  // получение списка покемонов из базы данных
   static Future<List<Pokemon>> getPokemonList() async {
     final db = await database;
     final results = await db.query(table) as List<Map<String, dynamic>>;
@@ -99,6 +99,8 @@ class DatabaseHelper {
         .toList();
   }
 
+  // возвращает количество элементов в таблице, нужно для последующего
+  //запроса к API
   static Future<int> countItems() async {
     final db = await database;
     final tableExists = await _tableExists(db, table);
@@ -111,9 +113,12 @@ class DatabaseHelper {
     return count;
   }
 
+  // проверка на существование базы данных
   static Future<bool> _tableExists(Database db, String tableName) async {
-    final tableCount = Sqflite.firstIntValue(await db.rawQuery(
-        "SELECT COUNT(*) FROM sqlite_master WHERE type = 'table' AND name = '$tableName'"));
+    final tableCount = Sqflite.firstIntValue(await db.rawQuery('''
+      SELECT COUNT(*) FROM sqlite_master 
+      WHERE type = 'table' AND name = '$tableName'
+      '''));
     return tableCount == 1;
   }
 }
