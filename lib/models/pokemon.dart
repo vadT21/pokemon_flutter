@@ -16,6 +16,8 @@ class Pokemon {
       required this.types,
       required this.stats});
 
+  // Фабричный метод, который позволяет создавать объект типа Pokemon
+  //на основе данных, представленных в формате JSON.
   factory Pokemon.fromJson(Map<String, dynamic> json) {
     final types = json['types']
         .map<String>((type) => type['type']['name'].toString())
