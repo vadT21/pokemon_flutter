@@ -1,10 +1,11 @@
 import 'package:path/path.dart';
+import 'dart:convert';
 import 'package:pokemon_flutter/models/pokemon.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseHelper {
-  static const _databaseName = 'pokemon_3.db';
-  static const _databaseVersion = 3;
+  static const _databaseName = 'pokemon_database.db';
+  static const _databaseVersion = 1;
 
   static const table = 'pokemon';
   static const columnId = '_id';
@@ -12,6 +13,7 @@ class DatabaseHelper {
   static const columnImageUrl = 'image_url';
   static const columnWeight = 'weight';
   static const columnHeight = 'height';
+  static const columnTypes = 'types';
 
   static Database? _database;
 
@@ -39,7 +41,8 @@ class DatabaseHelper {
         $columnName TEXT NOT NULL,
         $columnImageUrl TEXT NOT NULL,
         $columnWeight INTEGER,
-        $columnHeight INTEGER 
+        $columnHeight INTEGER, 
+        $columnTypes TEXT
       )
     ''');
   }
@@ -60,6 +63,9 @@ class DatabaseHelper {
       return existingPokemon.first[columnId] as int;
     } else {
       // Вставляем нового покемона в базу данных
+
+      final typesJson = jsonEncode(pokemon.types);
+
       return db.insert(
         table,
         {
@@ -68,6 +74,7 @@ class DatabaseHelper {
           columnImageUrl: pokemon.imageUrl,
           columnWeight: pokemon.weight,
           columnHeight: pokemon.height,
+          columnTypes: typesJson,
         },
       );
     }
@@ -83,6 +90,7 @@ class DatabaseHelper {
               imageUrl: result[columnImageUrl],
               weight: result[columnWeight],
               height: result[columnHeight],
+              types: jsonDecode(result[columnTypes]),
             ))
         .toList();
   }
