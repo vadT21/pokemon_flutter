@@ -4,7 +4,7 @@ import 'package:pokemon_flutter/models/pokemon.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseHelper {
-  static const _databaseName = 'pokemon_7.db';
+  static const _databaseName = 'pokemon_flutter_database.db';
   static const _databaseVersion = 1;
 
   static const table = 'pokemon';
@@ -97,5 +97,23 @@ class DatabaseHelper {
             types: jsonDecode(result[columnTypes]),
             stats: jsonDecode(result[columnStats])))
         .toList();
+  }
+
+  static Future<int> countItems() async {
+    final db = await database;
+    final tableExists = await _tableExists(db, table);
+    if (!tableExists) {
+      return 0;
+    }
+    final count = Sqflite.firstIntValue(
+            await db.rawQuery("SELECT COUNT(*) FROM '$table'")) ??
+        0;
+    return count;
+  }
+
+  static Future<bool> _tableExists(Database db, String tableName) async {
+    final tableCount = Sqflite.firstIntValue(await db.rawQuery(
+        "SELECT COUNT(*) FROM sqlite_master WHERE type = 'table' AND name = '$tableName'"));
+    return tableCount == 1;
   }
 }
