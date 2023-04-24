@@ -3,12 +3,12 @@ import 'package:pokemon_flutter/models/pokemon.dart';
 import 'package:pokemon_flutter/screens/pokemon_detail.dart';
 import 'package:pokemon_flutter/services/pokemon_db.dart';
 
-class HomePage extends StatefulWidget {
+class PokemonHomePage extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _PokemonHomePageState createState() => _PokemonHomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _PokemonHomePageState extends State<PokemonHomePage> {
   List<Pokemon> _pokemonList = [];
 
   @override
@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
         title: Text('Pokedex'),
       ),
       body: _pokemonList.isEmpty
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(),
             )
           : GridView.count(
