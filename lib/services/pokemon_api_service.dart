@@ -4,7 +4,7 @@ import 'package:pokemon_flutter/models/pokemon.dart';
 
 Future<List<Pokemon>> fetchPokemonList() async {
   final response =
-      await http.get(Uri.parse('https://pokeapi.co/api/v2/pokemon?limit=150'));
+      await http.get(Uri.parse('https://pokeapi.co/api/v2/pokemon?limit=10'));
 
   if (response.statusCode == 200) {
     final jsonBody = jsonDecode(response.body);
