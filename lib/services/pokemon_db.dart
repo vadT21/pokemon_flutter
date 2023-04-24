@@ -44,13 +44,16 @@ class DatabaseHelper {
     final db = await database;
 
     // Проверяем, есть ли покемон уже в базе данных
-    final pokemonList = await getPokemonList();
-    final existingPokemon =
-        pokemonList.firstWhere((element) => element.id == pokemon.id);
+    final existingPokemon = await db.query(
+      table,
+      where: '$columnId = ?',
+      whereArgs: [pokemon.id],
+      limit: 1,
+    );
 
-    if (existingPokemon != null) {
+    if (existingPokemon.isNotEmpty) {
       // Если покемон уже есть в базе данных, возвращаем его идентификатор
-      return existingPokemon.id;
+      return existingPokemon.first[columnId] as int;
     } else {
       // Вставляем нового покемона в базу данных
       return db.insert(
