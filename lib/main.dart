@@ -5,10 +5,12 @@ import 'package:pokemon_flutter/screens/pokemon_home.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(PokemonApp());
+  runApp(const PokemonApp());
 }
 
 class PokemonApp extends StatelessWidget {
+  const PokemonApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
