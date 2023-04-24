@@ -43,6 +43,20 @@ class PokemonDetailScreen extends StatelessWidget {
             style: TextStyle(fontSize: 16),
           ),
           SizedBox(height: 8),
+          Text(
+            'Types: ',
+            style: TextStyle(fontSize: 20),
+          ),
+          ListView.builder(
+            shrinkWrap: true,
+            itemCount: pokemon.types.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Text(
+                '- ${pokemon.types[index]}',
+                style: TextStyle(fontSize: 16),
+              );
+            },
+          ),
         ],
       ),
     );
