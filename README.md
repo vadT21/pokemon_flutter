@@ -26,3 +26,4 @@
  - Link to the app should be provided to the interviewer.
 
 ### How it's look like
+[![Alt text](https://img.youtube.com/vi/MKO28U42QqU/0.jpg)](https://www.youtube.com/watch?v=MKO28U42QqU)
